@@ -26,7 +26,7 @@ fi
 # GCC 7.2.0
 min_gcc="7.2.0"
 if [ "$(which gcc)" != "" ]; then
-    gcc_ver=$(gcc -dumpversion)
+    gcc_ver=$(gcc -dumpfullversion -dumpversion)
     if ! version_gt "$gcc_ver" "$min_gcc"; then
         echo "gcc version ${min_gcc} is required.."
         echo "    found version ${gcc_ver}."
