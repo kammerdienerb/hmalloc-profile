@@ -1,0 +1,12 @@
+[submodule "flang"]
+	path = flang
+	url = https://www.github.com/kammerdienerb/flang
+[submodule "hmalloc"]
+	path = hmalloc
+	url = https://www.github.com/kammerdienerb/hmalloc
+[submodule "flang-driver"]
+	path = flang-driver
+	url = https://github.com/flang-compiler/flang-driver
+[submodule "llvm"]
+	path = llvm
+	url = https://github.com/flang-compiler/llvm
