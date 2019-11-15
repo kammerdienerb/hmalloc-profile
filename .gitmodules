@@ -10,3 +10,9 @@
 [submodule "llvm"]
 	path = llvm
 	url = https://github.com/flang-compiler/llvm
+[submodule "openmp"]
+	path = openmp
+	url = https://github.com/llvm-mirror/openmp.git
+[submodule "compass"]
+	path = compass
+	url = https://github.com/kammerdienerb/compass
