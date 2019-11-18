@@ -1,4 +1,5 @@
 env/*
+!env/setup_env.sh
 !env/scripts/
 build
 benchmarks
