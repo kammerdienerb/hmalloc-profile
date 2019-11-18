@@ -7,18 +7,13 @@
 # build_libpgmath="yes"
 # build_flang="yes"
 # build_hmalloc="yes"
-build_compass="yes"
-
-
-function abspath   { (cd "$1" 2>/dev/null && pwd -P) }
-function corecount {
-    getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu
-}
+# build_compass="yes"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+source ${script_dir}/env/scripts/util.sh
+
 cd "$script_dir"
-mkdir -p env
 mkdir -p build
 install_dir=$(abspath ./env)
 
@@ -41,12 +36,12 @@ if [ "$(which cmake)" != "" ]; then
     if ! version_gt "$cmake_ver" "$min_cmake"; then
         echo "CMake version ${min_cmake} is required.."
         echo "    found version ${cmake_ver}."
-        exit 1
+        hm_err "build.sh" "Dependency error."
     fi
 else
     echo "CMake version ${min_cmake} is required.."
     echo "    did not find 'cmake'."
-    exit 1
+    hm_err "build.sh" "Dependency error."
 fi
 
 # GCC 7.2.0
@@ -56,12 +51,12 @@ if [ "$(which gcc)" != "" ]; then
     if ! version_gt "$gcc_ver" "$min_gcc"; then
         echo "gcc version ${min_gcc} is required.."
         echo "    found version ${gcc_ver}."
-        exit 1
+        hm_err "build.sh" "Dependency error."
     fi
 else
     echo "gcc version ${min_gcc} is required.."
     echo "    did not find 'gcc'."
-    exit 1
+    hm_err "build.sh" "Dependency error."
 fi
 
 ### Build LLVM ###
