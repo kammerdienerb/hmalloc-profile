@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 
-# build_llvm="yes"
-# build_flang_driver="yes"
-# build_openmp="yes"
-# build_libpgmath="yes"
-# build_flang="yes"
-# build_hmalloc="yes"
-# build_compass="yes"
+build_llvm="yes"
+build_flang_driver="yes"
+build_openmp="yes"
+build_libpgmath="yes"
+build_flang="yes"
+build_hmalloc="yes"
+build_compass="yes"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -19,13 +19,6 @@ install_dir=$(abspath ./env)
 
 ncores=$(corecount)
 
-
-### Update repos. ###
-git submodule update --init --remote
-(cd llvm;         git checkout release_70)
-(cd flang-driver; git checkout release_70)
-(cd compass;      git checkout hmalloc)
-
 ### Check versions. ###
 function version_gt() { test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1"; }
 
@@ -34,12 +27,12 @@ min_cmake="3.4.3"
 if [ "$(which cmake)" != "" ]; then
     cmake_ver=$(cmake --version | awk '{ if (NR==1) print $3 }')
     if ! version_gt "$cmake_ver" "$min_cmake"; then
-        echo "CMake version ${min_cmake} is required.."
+        echo "CMake version ${min_cmake} or greater is required.."
         echo "    found version ${cmake_ver}."
         hm_err "build.sh" "Dependency error."
     fi
 else
-    echo "CMake version ${min_cmake} is required.."
+    echo "CMake version ${min_cmake} or greater is required.."
     echo "    did not find 'cmake'."
     hm_err "build.sh" "Dependency error."
 fi
@@ -49,15 +42,21 @@ min_gcc="7.2.0"
 if [ "$(which gcc)" != "" ]; then
     gcc_ver=$(gcc -dumpfullversion -dumpversion)
     if ! version_gt "$gcc_ver" "$min_gcc"; then
-        echo "gcc version ${min_gcc} is required.."
+        echo "gcc version ${min_gcc} or greater is required.."
         echo "    found version ${gcc_ver}."
         hm_err "build.sh" "Dependency error."
     fi
 else
-    echo "gcc version ${min_gcc} is required.."
+    echo "gcc version ${min_gcc} or greater is required.."
     echo "    did not find 'gcc'."
     hm_err "build.sh" "Dependency error."
 fi
+
+### Update repos. ###
+git submodule update --init --remote
+(cd llvm;         git checkout release_70)
+(cd flang-driver; git checkout release_70)
+(cd compass;      git checkout hmalloc)
 
 ### Build LLVM ###
 if ! [ -z "$build_llvm" ]; then
