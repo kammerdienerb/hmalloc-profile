@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 
-build_llvm="yes"
-build_flang_driver="yes"
-build_openmp="yes"
-build_libpgmath="yes"
-build_flang="yes"
+# build_llvm="yes"
+# build_flang_driver="yes"
+# build_openmp="yes"
+# build_libpgmath="yes"
+# build_flang="yes"
 build_hmalloc="yes"
-build_compass="yes"
+# build_compass="yes"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -84,7 +84,8 @@ if ! [ -z "$build_flang_driver" ]; then
     CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${install_dir}             \
                    -DCMAKE_BUILD_TYPE=RelWithDebInfo                 \
                    -DCMAKE_CXX_COMPILER=g++                          \
-                   -DCMAKE_C_COMPILER=gcc"
+                   -DCMAKE_C_COMPILER=gcc"                           \
+                   -DLLVM_CONFIG=${install_dir}/bin/llvm-config"
 
     cmake ${CMAKE_OPTIONS} ../flang-driver
     make -j${ncores}
