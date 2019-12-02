@@ -84,7 +84,7 @@ if ! [ -z "$build_flang_driver" ]; then
     CMAKE_OPTIONS="-DCMAKE_INSTALL_PREFIX=${install_dir}             \
                    -DCMAKE_BUILD_TYPE=RelWithDebInfo                 \
                    -DCMAKE_CXX_COMPILER=g++                          \
-                   -DCMAKE_C_COMPILER=gcc"                           \
+                   -DCMAKE_C_COMPILER=gcc                            \
                    -DLLVM_CONFIG=${install_dir}/bin/llvm-config"
 
     cmake ${CMAKE_OPTIONS} ../flang-driver
