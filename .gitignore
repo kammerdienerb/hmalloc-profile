@@ -1,7 +1,9 @@
 env/*
 !env/setup_env.sh
+!env/setup_env_centos.sh
 !env/scripts/
 build
 benchmarks.bak
 hmalloc.log
 hmalloc.profile
+.yed

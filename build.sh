@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 
-# build_llvm="yes"
-# build_flang_driver="yes"
-# build_openmp="yes"
-# build_libpgmath="yes"
-# build_flang="yes"
+build_llvm="yes"
+build_flang_driver="yes"
+build_openmp="yes"
+build_libpgmath="yes"
+build_flang="yes"
 build_hmalloc="yes"
-# build_compass="yes"
+build_compass="yes"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
