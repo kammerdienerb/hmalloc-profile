@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 
-build_llvm="yes"
-build_flang_driver="yes"
-build_openmp="yes"
-build_libpgmath="yes"
-build_flang="yes"
+# build_llvm="yes"
+# build_flang_driver="yes"
+# build_openmp="yes"
+# build_libpgmath="yes"
+# build_flang="yes"
 build_hmalloc="yes"
 build_compass="yes"
 
@@ -52,11 +52,21 @@ else
     hm_err "build.sh" "Dependency error."
 fi
 
+### Check for libpfm. ###
+pfm_test_prg="#include <perfmon/pfmlib_perf_event.h>\nint main() { return 0; }"
+if ! echo -e "${pfm_test_prg}" | gcc -x c -lpfm -o /dev/null -; then
+    echo "libpfm test failed.."
+    echo "    ensure that libpfm is available."
+    hm_err "build.sh" "Dependency error."
+fi
+
 ### Update repos. ###
-git submodule update --init --remote
-(cd llvm;         git checkout release_70)
-(cd flang-driver; git checkout release_70)
-(cd compass;      git checkout hmalloc)
+# git submodule update --init --remote
+# (cd llvm;         git checkout release_70)
+# (cd flang;        git checkout master)
+# (cd flang-driver; git checkout release_70)
+# (cd compass;      git checkout hmalloc)
+# (cd hmalloc;      git pull origin master)
 
 ### Build LLVM ###
 if ! [ -z "$build_llvm" ]; then

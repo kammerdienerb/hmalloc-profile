@@ -105,11 +105,16 @@ if [[ $NO_TRANSFORM = " " ]]; then
       -compass -compass-depth=${HM_CONTEXT} \
       .hm_linked_ir.bc -o .hm_linked_ir_transformed.bc
 
+  _COMPASS_ONLY_CLONE="--compass-only-clone"
+  if [[ "$COMPASS_ONLY_CLONE" == "" ]]; then
+    _COMPASS_ONLY_CLONE=""
+  fi
+
   # Run the compiler pass on each individual file
   # Construct a newline-separated list of commands.
   COMMANDS=""
   for file in "${FILES_ARR[@]}"; do
-    COMMANDS+="${LLVMPATH}${LLVMOPT} -load ${LIB_DIR}/libcompass.so -compass-detail -compass-mode=transform -compass -compass-depth=${HM_CONTEXT} ${file}.bc -o ${file}.bc"
+    COMMANDS+="${LLVMPATH}${LLVMOPT} -load ${LIB_DIR}/libcompass.so -compass-detail -compass-mode=transform ${_COMPASS_ONLY_CLONE} -compass -compass-depth=${HM_CONTEXT} ${file}.bc -o ${file}.bc"
     COMMANDS+=$'\n'
   done
   echo "$COMMANDS" | xargs -I CMD --max-procs=64 bash -c CMD

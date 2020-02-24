@@ -43,15 +43,15 @@ export C_COMPILER="clang"
 export LLVMLINK="llvm-link"
 export LLVMOPT="opt"
 
-export COMPILER_WRAPPER="${LD_LINKER} -I${HMALLOC_ENV_DIR}/include"
-export LD_WRAPPER="${LD_LINKER} -L${HMALLOC_ENV_DIR}/lib -lhmalloc "
-export PREPROCESS_WRAPPER="${LD_LINKER} -E -x c -P"
-export AR_WRAPPER="ar"
-export RANLIB_WRAPPER="ranlib"
+# export COMPILER_WRAPPER="${LD_LINKER} -I${HMALLOC_ENV_DIR}/include"
+# export LD_WRAPPER="${LD_LINKER} -L${HMALLOC_ENV_DIR}/lib -lhmalloc "
+# export PREPROCESS_WRAPPER="${LD_LINKER} -E -x c -P"
+# export AR_WRAPPER="ar"
+# export RANLIB_WRAPPER="ranlib"
 
-(do_bench_build)
-
-mv exe control
+# (do_bench_build)
+#
+# mv exe control
 
 # Make sure the Makefiles find our wrappers
 export COMPILER_WRAPPER="compiler_wrapper.sh -I${HMALLOC_ENV_DIR}/include"
@@ -59,6 +59,14 @@ export LD_WRAPPER="ld_wrapper.sh "
 export PREPROCESS_WRAPPER="clang -E -x c -P"
 export AR_WRAPPER="ar_wrapper.sh"
 export RANLIB_WRAPPER="ranlib_wrapper.sh"
+
+export NO_TRANSFORM="yes"
+
+(do_bench_build)
+
+mv exe control
+
+export NO_TRANSFORM=""
 
 (do_bench_build)
 

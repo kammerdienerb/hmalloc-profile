@@ -21,9 +21,11 @@ fi
 
 control="./control "
 jemalloc="env LD_PRELOAD=/usr/lib64/libjemalloc.so ./control"
-hmalloc="env LD_PRELOAD=${HMALLOC_ENV_DIR}/lib/libhmalloc.so HMALLOC_PROFILE=yes ./transformed"
+hmalloc="env LD_PRELOAD=${HMALLOC_ENV_DIR}/lib/libhmalloc.so ./control"
+hmalloc_profile="env LD_PRELOAD=${HMALLOC_ENV_DIR}/lib/libhmalloc.so HMALLOC_PROFILE=yes HMALLOC_SITE_LAYOUT=thread ./transformed"
+hmalloc_profile_site="env LD_PRELOAD=${HMALLOC_ENV_DIR}/lib/libhmalloc.so HMALLOC_PROFILE=yes HMALLOC_SITE_LAYOUT=site ./transformed"
 
-if ! [ "$1" = "control" ] && ! [ "$1" = "jemalloc" ] && ! [ "$1" = "hmalloc" ]; then
+if ! [ "$1" = "control" ] && ! [ "$1" = "jemalloc" ] && ! [ "$1" = "hmalloc" ] && ! [ "$1" = "hmalloc_profile" ] && ! [ "$1" = "hmalloc_profile_site" ]; then
     hm_err "bench_run.sh" "Invalid run config '$1'."
 fi
 
@@ -48,6 +50,6 @@ function run_prepared_cmd {
 echo $CMD
 do_bench_run
 
-if [ "$1" = "hmalloc" ]; then
+if [ "$1" = "hmalloc_profile" ]; then
     mv hmalloc.profile results/$2/hmalloc.profile.csv
 fi
