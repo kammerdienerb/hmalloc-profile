@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # input=" -s 220 -i 5 -r 11 -b 0 -c 64 -p"
-bench_dir="benchmarks/amg"
-input_small=" -problem 2 -n 120 120 120"
+bench_dir=$(realpath "benchmarks/qmcpack")
+input=" small.xml"
 
-gdb ${bench_dir}/transformed -ex 'set env LD_PRELOAD=/home/bkammerd/hmalloc-profile/env/lib/libhmalloc.so' -ex 'set env HMALLOC_PROFILE=yes HMALLOC_SITE_LAYOUT=thread' -ex "run ${input}"
+cd ${bench_dir}/run
+
+LD_PRELOAD=/home/bkammerd/hmalloc-profile/env/lib/libhmalloc.so HMALLOC_PROFILE=yes HMALLOC_SITE_LAYOUT=thread ${bench_dir}/transformed ${input} &
+gdb -p $!
+
+wait
