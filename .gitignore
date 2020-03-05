@@ -7,3 +7,4 @@ benchmarks.bak
 hmalloc.log
 hmalloc.profile
 .yed
+.yedrc
