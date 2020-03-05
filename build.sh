@@ -7,7 +7,7 @@
 # build_libpgmath="yes"
 # build_flang="yes"
 build_hmalloc="yes"
-build_compass="yes"
+# build_compass="yes"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -61,12 +61,18 @@ if ! echo -e "${pfm_test_prg}" | gcc -x c -lpfm -o /dev/null -; then
 fi
 
 ### Update repos. ###
-# git submodule update --init --remote
-# (cd llvm;         git checkout release_70)
-# (cd flang;        git checkout master)
-# (cd flang-driver; git checkout release_70)
-# (cd compass;      git checkout hmalloc)
-# (cd hmalloc;      git pull origin master)
+for repo in llvm openmp flang flang-driver compass hmalloc; do
+    if ! [ -d "$repo" ]; then
+        git clone https://github.com/kammerdienerb/$repo
+    else
+        (cd "$repo"; git pull)
+    fi
+done
+(cd "llvm";         git checkout release_70)
+(cd "openmp";       git checkout release_70)
+(cd "flang-driver"; git checkout release_70)
+(cd "flang";        git checkout release_70)
+(cd "compass";      git checkout hmalloc)
 
 ### Build LLVM ###
 if ! [ -z "$build_llvm" ]; then
