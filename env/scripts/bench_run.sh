@@ -38,10 +38,12 @@ export CMD="${!1} ${!input_name}"
 
 cd ${BENCH_DIR}
 
-rm -f hmalloc.profile
-mkdir -p results/$2
+ITER=i"${ITER:-0}"
 
-export output_file="$(realpath results/$2/$1.stdout)"
+rm -f hmalloc.profile
+mkdir -p results/$2/$ITER
+
+export output_file="$(realpath results/$2/$ITER/$1.stdout)"
 
 function run_prepared_cmd {
     script -q -c "/usr/bin/time -v ${CMD}" /dev/null 2>&1 | tee ${output_file}
@@ -51,5 +53,7 @@ echo $CMD
 do_bench_run
 
 if [ "$1" = "hmalloc_profile" ]; then
-    mv hmalloc.profile results/$2/hmalloc.profile.csv
+    mv hmalloc.profile results/$2/$ITER/hmalloc.profile.csv
+elif [ "$1" = "hmalloc_profile_site" ]; then
+    mv hmalloc.profile results/$2/$ITER/hmalloc_site.profile.csv
 fi
