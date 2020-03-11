@@ -19,3 +19,5 @@ llvm
 openmp
 .yed
 .yedrc
+results
+runall.sh
