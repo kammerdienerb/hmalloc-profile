@@ -7,13 +7,13 @@ source ${script_dir}/scripts/util.sh
 if [ "$(which cmake3)" == "" ]; then
     echo "A cmake3 executable is required.."
     echo "    Please install cmake3."
-    hm_err "run_this_first_on_centos.sh" "Dependency error."
+    hm_err "setup_env_centos.sh" "Dependency error."
 fi
 
 if ! scl --list | grep "devtoolset-7" 2>&1 > /dev/null; then
     echo "devtoolset-7 is required.."
     echo "    Please install devtoolset-7."
-    hm_err "run_this_first_on_centos.sh" "Dependency error."
+    hm_err "setup_env_centos.sh" "Dependency error."
 fi
 
 if ! [ -f ${script_dir}/bin/cmake ]; then
